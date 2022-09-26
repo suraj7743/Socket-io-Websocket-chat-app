@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
+
+    <title>Document</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <style>
+      .container {
+        max-width: 955px;
+        background-color: aqua;
+        margin: auto;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
+      }
+      .message {
+        background-color: grey;
+        width: 30%;
+        padding: 3px;
+        margin-left: 3px;
+        border-radius: 10px;
+        margin-bottom: 3px;
+        box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
+        margin-bottom: 20px;
+      }
+      .left {
+        float: left;
+        clear: both;
+      }
+      .right {
+        float: right;
+        clear: both;
+      }
+      .send {
+        text-align: center;
+        margin-top: 50px;
+        max-width: 959px;
+        display: block;
+        margin: auto;
+      }
+
+      #sendmessage {
+        width: 90%;
+
+        box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
+      }
+    </style>
+    <div class="container mt-5">
+      <div class="logo text-center mt-2 mb-2">should display logo</div>
+      <div class="message left text-start mt-2">
+        This is message from the other person Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Molestiae excepturi sit quasi quaerat id
+        assumenda, laudantium consequatur doloribus eaque soluta suscipit
+        laborum similique vero fuga culpa cum debitis natus possimus.
+      </div>
+      <div class="message right">This is me</div>
+      <div class="message right">This is me</div>
+      <div class="message right">This is me</div>
+      <div class="message right">This is me</div>
+    </div>
+    <div class="send">
+      <form class="input-group" id="submitform">
+        <input
+          type="text"
+          id="sendmessage"
+          placeholder="Write message here"
+          autofocus
+        />
+        <button class="btn bg-dark text-white" style="width: 10%">Send</button>
+      </form>
+    </div>
+    <script>
+      const form = document.querySelector("#submitform");
+      const messageInput = document.getElementById("sendmessage");
+      const messageContainer = document.querySelector(".container");
+      const append = (message, position) => {
+        const messageElement = document.createElement("div");
+        messageElement.innerText = message;
+        messageElement.classList.add("message");
+        messageElement.classList.add(position);
+        messageContainer.append(messageElement);
+      };
+      console.log(messageContainer.scrollHeight);
+      const socket = io();
+      document.querySelector("#submitform").addEventListener("submit", (e) => {
+        e.preventDefault();
+        let textmessage = document.querySelector("input").value;
+        textmessage = textmessage.trim();
+        if (textmessage === "") {
+        } else {
+          append(textmessage, "right");
+        }
+
+        clearMessage();
+      });
+      const clearMessage = () => {
+        document.querySelector("input").value = "";
+      };
+    </script>
+
+    <!-- <script src="../chat.js"></script> -->
+  </body>
+</html>
