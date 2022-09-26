@@ -82,6 +82,7 @@
       </form>
     </div>
     <script>
+      const name = prompt("Enter your name ");
       const form = document.querySelector("#submitform");
       const messageInput = document.getElementById("sendmessage");
       const messageContainer = document.querySelector(".container");
@@ -94,6 +95,9 @@
       };
       console.log(messageContainer.scrollHeight);
       const socket = io();
+      socket.emit("username", () => {
+        return name;
+      });
       document.querySelector("#submitform").addEventListener("submit", (e) => {
         e.preventDefault();
         let textmessage = document.querySelector("input").value;
