@@ -3,13 +3,12 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 app.use(express.static("./public"));
+const socketIo = require("socket.io");
 
-const io = require("socket.io")(server);
+const io = socketIo(server);
 io.on("connection", (socket) => {
-  socket.on("username", (name) => {
-    socket.emit("takeUsername", () => {
-      return name;
-    });
+  socket.on("inputMessage", (text) => {
+    socket.broadcast.emit("takeMessage", text);
   });
 });
 

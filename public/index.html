@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="./js/chat.js"></script> -->
 
     <title>Document</title>
     <!-- CSS only -->
@@ -57,8 +58,10 @@
         box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
       }
     </style>
-    <div class="container mt-5">
-      <div class="logo text-center mt-2 mb-2">should display logo</div>
+    <div class="container mt-5 text-white">
+      <div class="logo text-center mt-2 mb-2 text-dark">
+        should display logo
+      </div>
       <div class="message left text-start mt-2">
         This is message from the other person Lorem ipsum dolor sit amet
         consectetur adipisicing elit. Molestiae excepturi sit quasi quaerat id
@@ -71,7 +74,7 @@
       <div class="message right">This is me</div>
     </div>
     <div class="send">
-      <form class="input-group" id="submitform">
+      <form class="input-group" id="sendform">
         <input
           type="text"
           id="sendmessage"
@@ -82,10 +85,11 @@
       </form>
     </div>
     <script>
-      const name = prompt("Enter your name ");
-      const form = document.querySelector("#submitform");
+      const form = document.querySelector(".input-group");
       const messageInput = document.getElementById("sendmessage");
       const messageContainer = document.querySelector(".container");
+      const messageLeft = document.querySelector(".message left");
+      const messageRight = document.querySelector(".message right");
       const append = (message, position) => {
         const messageElement = document.createElement("div");
         messageElement.innerText = message;
@@ -93,27 +97,37 @@
         messageElement.classList.add(position);
         messageContainer.append(messageElement);
       };
-      console.log(messageContainer.scrollHeight);
+
+      var audio = new Audio("../ting.mp3");
       const socket = io();
-      socket.emit("username", () => {
-        return name;
-      });
-      document.querySelector("#submitform").addEventListener("submit", (e) => {
+      let textMessage;
+      document.querySelector("#sendform").addEventListener("submit", (e) => {
         e.preventDefault();
-        let textmessage = document.querySelector("input").value;
-        textmessage = textmessage.trim();
-        if (textmessage === "") {
+        textMessage = document.querySelector("input").value;
+        textMessage = textMessage.trim();
+        if (textMessage === "") {
         } else {
-          append(textmessage, "right");
+          textMessage = textMessage;
+          append(textMessage, "right");
+          socket.emit("inputMessage", textMessage);
+          messageContainer.scrollTop = messageContainer.scrollHeight;
+          audio.play();
         }
 
         clearMessage();
+        messageLeft.scrollTop = messageLeft.scrollHeight;
+        messageRight.scrollTop = messageRight.scrollHeight;
       });
+
       const clearMessage = () => {
         document.querySelector("input").value = "";
       };
+
+      socket.on("takeMessage", (text) => {
+        append(text, "left");
+      });
     </script>
 
-    <!-- <script src="../chat.js"></script> -->
+    <!-- <script defer src="../chat.js"></script> -->
   </body>
 </html>
