@@ -1,0 +1,87 @@
+* {
+  font-family: "Alkalami", serif;
+  font-weight: 500;
+  font-size: 25px;
+}
+body {
+  background-color: black;
+}
+
+.container {
+  width: 50%;
+  margin: 0 auto;
+  padding-left: 5%;
+  background-color: antiquewhite;
+  border-radius: 2%;
+
+  box-shadow: 5px 10px rgb(232, 176, 176);
+  display: block;
+}
+h2 {
+  width: 100%;
+  margin: 0 auto;
+  font-size: 20px;
+  text-align: center;
+  padding-top: 7%;
+}
+
+.user_icon {
+  justify-content: center;
+}
+input {
+  font-size: 70%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 34px;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  outline: none;
+  box-sizing: border-box;
+  margin-left: 0%;
+}
+
+hr {
+  opacity: 40%;
+}
+button {
+  border-radius: 100%;
+  color: white;
+  background-color: rgb(38, 44, 44);
+  border: none;
+  font-size: 70%;
+  margin-left: 2%;
+  cursor: pointer;
+  background-color: steelblue;
+  font-weight: 500;
+  height: 40px;
+  letter-spacing: 3px;
+}
+button:hover {
+  transform: scale(1.1, 1.1);
+  background-color: gainsboro;
+  color: black;
+}
+.host {
+  margin-left: 2.8%;
+}
+.roomh3 {
+  margin-left: 3%;
+}
+h1 {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+}
+img {
+  width: 7%;
+  height: 10%;
+}
+.flex {
+  display: flex;
+}
+.make {
+  margin-top: 3%;
+}
+h4 {
+  font-size: 14px;
+}

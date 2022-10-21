@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="socket.io/socket.io.js"></script>
+    <!-- <script defer src="../public/chat.js"></script> -->
+    <!-- <script src="./js/chat.js"></script> -->
+
+    <title>Document</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <style>
+      .container {
+        border-radius: 2%;
+        max-width: 955px;
+        background: linear-gradient(
+          to right,
+          #e0eafc,
+          #cfdef3
+        ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        margin: auto;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
+        box-sizing: border-box;
+      }
+      .center {
+        text-align: start;
+        margin-left: 46%;
+        color: black;
+        opacity: 70%;
+        float: left;
+        clear: both;
+        box-sizing: border-box;
+      }
+      .message {
+        max-width: 40%;
+        width: max-content;
+        padding-top: 1px;
+        padding: 3px;
+        margin-left: 3px;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
+        margin-bottom: 3px;
+        margin-bottom: 20px;
+        text-align: start;
+        word-break: break-all;
+      }
+
+      .centerRight {
+        float: right;
+        clear: both;
+      }
+
+      .left {
+        float: left;
+        clear: both;
+        background: linear-gradient(
+          to right,
+          #dae2f8,
+          #d6a4a4
+        ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        color: black;
+      }
+      .right {
+        float: right;
+        clear: both;
+
+        background: linear-gradient(
+          to right,
+          #6190e8,
+          #a7bfe8
+        ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        color: white;
+      }
+      .send {
+        text-align: center;
+        margin-top: 50px;
+        max-width: 959px;
+        display: block;
+        margin: auto;
+      }
+      p {
+        text-align: start;
+        align-items: center;
+        margin-left: 7px;
+        margin-right: 7px;
+        margin-bottom: auto;
+      }
+      .logo {
+        position: sticky;
+        top: 0;
+      }
+      .userjoined {
+        text-align: center;
+        position: fixed;
+      }
+      .spanleft {
+        font-size: 10px;
+        float: left;
+      }
+      .spanright {
+        font-size: 10px;
+        float: right;
+        clear: both;
+      }
+      p {
+        float: left;
+        clear: both;
+      }
+
+      #sendmessage {
+        width: 90%;
+
+        box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background-color: darkgray;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        box-shadow: inset 0 0 7px black;
+      }
+    </style>
+    <div class="container mt-5 text-white">
+      <div class="logo text-center mt-2 mb-2 text-dark">
+        <img
+          src="../public/chat-box.png"
+          srcset=""
+          style="width: 100px; height: 100px"
+        />
+      </div>
+      <div class="message left text-start mt-2"></div>
+      <div class="center">Hii <%= username%> 👋</div>
+
+      <div class="message right"></div>
+    </div>
+    <div class="send">
+      <form class="input-group" id="sendform">
+        <input
+          type="text"
+          id="sendmessage"
+          placeholder="Write message here"
+          autofocus
+        />
+        <button class="btn bg-dark text-white" style="width: 10%">Send</button>
+      </form>
+    </div>
+
+    <script>
+      let today = new Date();
+      function currentdate() {
+        let month = today.getMonth() + 1;
+        let year = today.getFullYear();
+        let date = today.getDate();
+        let current_date = `${month}/${date}/${year}`;
+        return current_date;
+      }
+
+      // output.innerText = current_date;
+      function currenttime() {
+        let today = new Date();
+        let hours = addZero(today.getHours());
+        let minutes = addZero(today.getMinutes());
+        let current_time = `${hours}:${minutes}`;
+        return current_time;
+      }
+
+      function addZero(num) {
+        return num < 10 ? `0${num}` : num;
+      }
+
+      //selector
+      const form = document.querySelector(".input-group");
+      const messageInput = document.getElementById("sendmessage");
+      const messageContainer = document.querySelector(".container");
+      const messageLeft = document.querySelector(".message left");
+      const messageRight = document.querySelector(".message right");
+      const sendbutton = document.querySelector("#sendform");
+      const input = document.querySelector("input");
+
+      const socket = io();
+
+      function userJoined(username, text) {
+        const user = document.createElement("div");
+        user.classList.add("center");
+        user.textContent = username + text;
+        messageContainer.appendChild(user);
+      }
+      //broadcast event to other user except connect one
+      socket.on("user-joined", (username) => {
+        userJoined(username, " joined");
+      });
+      let personname;
+      let senddate;
+      var audio = new Audio("../public/ting.mp3");
+      const append = (message, position, username, senddate) => {
+        const messageElement = document.createElement("div");
+        const spandate = document.createElement("span");
+        const spanleft = document.createElement("span");
+        spanleft.innerText = username;
+        spandate.innerText = senddate;
+        spandate.classList.add("spanright");
+        spanleft.classList.add("spanleft");
+        const paragraphElement = document.createElement("p");
+        paragraphElement.innerText = message;
+        messageElement.append(spanleft); //username
+        messageElement.append(paragraphElement); //message
+        messageElement.append(spandate); //time
+        messageElement.classList.add("message");
+        messageElement.classList.add(position);
+        messageContainer.append(messageElement);
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+        if (position === "left") {
+          audio.play();
+        }
+      };
+      let textMessage;
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        textMessage = input.value;
+        textMessage = textMessage.trim();
+        if (textMessage === "") {
+        } else {
+          textMessage = textMessage;
+          senddate = currenttime();
+          socket.emit("sendMessageToServer", {
+            textMessage,
+            username: "<%= username %>",
+            senddate,
+            code: "<%= entryCode %>",
+          });
+        }
+        input.value = "";
+      });
+
+      socket.on("takeMessage", ({ textMessage, username, senddate }) => {
+        console.log(`${username}:${textMessage}:${senddate}`);
+        if (username === "<%= username %>") {
+          append(textMessage, "right", "You", senddate);
+        } else {
+          append(textMessage, "left", username, senddate);
+        }
+      });
+      socket.on("userleft", () => {
+        userJoined("<%= username %>", " Left");
+      });
+    </script>
+  </body>
+</html>

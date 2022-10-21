@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../public/sample.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Chat-app</title>
+  </head>
+  <body>
+    <h1>
+      CHAT-ROOM <span><img src="../public/chat-box.png" alt="" /></span>
+    </h1>
+    <div class="container">
+      <h2>Sign In To Your Account</h2>
+      <hr />
+      <form action="/chat">
+        <div class="user_icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-person-circle cicleIcon"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path
+              fill-rule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+            />
+          </svg>
+          <input
+            type="text"
+            class="input"
+            placeholder="Enter your name "
+            name="name"
+            required
+            autofocus
+          />
+          <hr />
+        </div>
+        <!-- <div class="user-icon host">
+          <h3>Make Room</h3>
+          <div class="flex">
+            <input
+              type="text"
+              class="input"
+              placeholder="Enter Room name "
+              name="room"
+              autofocus
+              required
+            />
+            <button type="submit">START</button>
+          </div>
+
+          <hr />
+        </div> -->
+
+        <div class="user-icon room">
+          <h3 class="roomh3">Enter Existing Room</h3>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-lock-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"
+            />
+          </svg>
+          <input
+            type="text"
+            class="input code"
+            placeholder="Code here"
+            name="code"
+            required
+          />
+          <button class="joinRoom">JOIN</button>
+          <h4></h4>
+          <hr />
+        </div>
+      </form>
+
+      <div class="user-icon host">
+        <div class="flex">
+          <h3>Make My Own Room</h3>
+          <button class="make">MAKE</button>
+        </div>
+
+        <hr />
+      </div>
+    </div>
+    <script>
+      const makeroombutton = document.querySelector(".make");
+      const joinRoombutton = document.querySelector(".joinRoom");
+      const code = document.querySelector(".code");
+      const textAfterMakingRoom = document.querySelector(".roomh3");
+      const connectFriendsText = document.querySelector("h4");
+      makeroombutton.addEventListener("click", () => {
+        textAfterMakingRoom.textContent = "Your Room Id";
+        connectFriendsText.textContent =
+          "Share this id with friends to connect to them";
+        code.value = "<%= entryCode%>";
+      });
+    </script>
+  </body>
+</html>
