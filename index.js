@@ -15,17 +15,41 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //connecting to redis with docker image
+const redisconfig = {
+  host: "localhost",
+  port: 6379,
+  rejectUnauthorized: false,
+};
 let redisClient = Redis.createClient({
-  url: process.env.REDIS_URL,
   legacyMode: true,
   socket: {
+    host: "localhost",
     port: 6379,
-    host: "redis",
-    rejectUnauthorized: false,
   },
 });
 
-redisClient.connect();
+// {
+//   url: process.env.REDIS_URL,
+//   legacyMode: true,
+//   socket: {
+//     port: 6379,
+//     host: "redis",
+//     rejectUnauthorized: false,
+//   },
+// }
+
+redisClient
+  .connect()
+  .then(() => {
+    console.log("redis connected");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+redisClient.on("error", function (err) {
+  console.log("Error Ocucured:", err);
+});
 
 let code;
 let character;
@@ -68,6 +92,9 @@ const chatControlMiddleware = (req, res, next) => {
     return res.redirect("/sample");
   }
   redisClient.sMembers("codekeys", (err, data) => {
+    if (err) {
+      console.log(err);
+    }
     data.forEach((x) => {
       if (x === code.toString()) {
         check = 2;
