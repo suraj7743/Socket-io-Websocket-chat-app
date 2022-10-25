@@ -15,19 +15,20 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //connecting to redis with docker image
-console.log(moment().calendar());
 let redisClient = Redis.createClient({
+  url: process.env.REDIS_URL,
   legacyMode: true,
   socket: {
     port: 6379,
     host: "redis",
+    rejectUnauthorized: false,
   },
 });
 
 redisClient.connect();
-redisClient.set("somevalue", "./public/chat-box.png");
 
 let code;
+let character;
 app.use(
   session({
     secret: "somesecretkeyidontwannareveal",
@@ -40,6 +41,9 @@ app.use(
 );
 app.use(flash());
 //render homepage
+app.get("/", (req, res) => {
+  res.send("welcome to my chat app");
+});
 app.get("/sample", (req, res) => {
   entryCode = crypto.randomBytes(3).toString("hex");
   res.render("sampleuser", {
@@ -49,8 +53,9 @@ app.get("/sample", (req, res) => {
 });
 //get data from body and parse them
 app.post("/sample", (req, res) => {
-  const { name, code } = req.body;
-  return res.redirect(`/chat/?name=${name}&code=${code}`);
+  const { name, code, avatar } = req.body;
+  character = avatar;
+  return res.redirect(`/chat/?name=${name}&code=${code}&avatar=${character}`);
 });
 
 //middleware for chat route to control only person with valid id can enter
@@ -79,13 +84,12 @@ const chatControlMiddleware = (req, res, next) => {
 
 //socket connection starts from here
 let personname;
-
 app.get("/chat", chatControlMiddleware, (req, res, next) => {
   const username = req.query.name;
-  personname = req.query.name;
   code = req.query.code;
-  io.emit("user-joined", username);
-  return res.render("chatroom", { username, code });
+  character = req.query.avatar;
+  io.emit("user-joined", { username, character });
+  return res.render("chatroom", { username, code, character });
 });
 
 //socket connection
@@ -96,7 +100,13 @@ function sendMessage(socket) {
       const username = parseRedis.username;
       const textMessage = parseRedis.textMessage;
       const senddate = parseRedis.senddate;
-      socket.emit("takeMessage", { textMessage, username, senddate });
+      const character = parseRedis.character;
+      socket.emit("takeMessage", {
+        textMessage,
+        username,
+        senddate,
+        character,
+      });
     });
   });
 }
@@ -105,15 +115,16 @@ io.on("connection", (socket) => {
   sendMessage(socket);
   socket.on(
     "sendMessageToServer",
-    ({ textMessage, username, senddate, code }) => {
+    ({ textMessage, username, senddate, character }) => {
       const sampleobject = {
         username,
         textMessage,
         senddate,
+        character,
       };
 
       redisClient.rPush(String(code), JSON.stringify(sampleobject));
-      io.emit("takeMessage", { textMessage, username, senddate });
+      io.emit("takeMessage", { textMessage, username, senddate, character });
     }
   );
   socket.on("typing", () => {
@@ -124,6 +135,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(8000, () => {
+server.listen(process.env.PORT || 8000, () => {
   console.log("listening to port 8000");
 });

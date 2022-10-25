@@ -7,35 +7,232 @@
     <title>Document</title>
   </head>
   <body>
-    <img src="./public/avatar/avatar-1.png" alt="" />
-    <img src="./public/avatar/avatar-2.png" alt="" />
-    <!-- <img src="./public/avatar/avatar-3.png" alt="" /> -->
-    <img src="./public/avatar/avatar-4.png" alt="" />
-    <!-- <img src="./public/avatar/avatar-5.png" alt="" /> -->
-    <img src="./public/avatar/avatar-6.png" alt="" />
-    <img src="./public/avatar/avatar-7.png" alt="" />
-    <!-- <img src="./public/avatar/avatar-8.png" alt="" /> -->
-    <img src="./public/avatar/avatar-9.png" alt="" />
-    <img src="./public/avatar/avatar-10.png" alt="" />
-    <img src="./public/avatar/avatar-11.png" alt="" />
-    <img src="./public/avatar/avatar-12.png" alt="" />
-    <img src="./public/avatar/avatar-13.png" alt="" />
-    <img src="./public/avatar/avatar-14.png" alt="" />
-    <img src="./public/avatar/avatar-15.png" alt="" />
-    <!-- <img src="./public/avatar/avatar-16.png" alt="" /> -->
-    <img src="./public/avatar/avatar-17.png" alt="" />
-    <img src="./public/avatar/avatar-18.png" alt="" />
-    <img src="./public/avatar/avatar-19.png" alt="" />
-    <img src="./public/avatar/avatar-20.png" alt="" />
+    <style>
+      *,
+      *:after,
+      *:before {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+        color: #000021;
+        font-size: 28px;
+        background-color: #e6e6ef;
+      }
+
+      .container {
+        max-width: 20%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      input[type="radio"] {
+        display: none;
+      }
+
+      label {
+        display: block;
+        cursor: pointer;
+        font-weight: 500;
+        margin-bottom: 0.1%;
+      }
+
+      label span {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px 10px 10px;
+        border-radius: 31px;
+        transition: 0.25s ease;
+      }
+
+      label span:hover,
+      input[type="radio"]:checked + span {
+        background-color: #d6d6e5;
+      }
+
+      label span:before {
+        content: "";
+        background-color: #fff;
+        width: 0px;
+        height: 0px;
+        border-radius: 50%;
+        margin-right: 10px;
+        transition: 0.25s ease;
+        box-shadow: inset 0 0 0 2px #00005c;
+      }
+
+      input[type="radio"]:checked + span:before {
+        box-shadow: inset 0 0 0 10px #00005c;
+      }
+      img {
+        width: 40px;
+        height: 100%;
+      }
+    </style>
+    <form action="">
+      <div class="container">
+        <form action="/hello" method="post">
+          <label>
+            <input type="radio" id="html" name="avatar" value="avatar-1" />
+            <span><img src="./public/avatar/avatar-1.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="css"
+              name="avatar"
+              value="avatar-2"
+              checked
+            />
+            <span><img src="./public/avatar/avatar-2.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-4"
+            />
+            <span><img src="./public/avatar/avatar-4.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-6"
+            />
+            <span><img src="./public/avatar/avatar-6.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-7"
+            />
+            <span><img src="./public/avatar/avatar-7.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-8"
+            />
+            <span><img src="./public/avatar/avatar-8.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-9"
+            />
+            <span><img src="./public/avatar/avatar-9.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-10"
+            />
+            <span><img src="./public/avatar/avatar-10.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-11"
+            />
+            <span><img src="./public/avatar/avatar-11.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-12"
+            />
+            <span><img src="./public/avatar/avatar-12.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-13"
+            />
+            <span><img src="./public/avatar/avatar-13.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-14"
+            />
+            <span><img src="./public/avatar/avatar-14.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-15"
+            />
+            <span><img src="./public/avatar/avatar-15.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-17"
+            />
+            <span><img src="./public/avatar/avatar-17.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-18"
+            />
+            <span><img src="./public/avatar/avatar-18.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-19"
+            />
+            <span><img src="./public/avatar/avatar-19.png" alt="" /></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="javascript"
+              name="avatar"
+              value="avatar-20"
+            />
+            <span><img src="./public/avatar/avatar-20.png" alt="" /></span>
+          </label>
+          <button type="submit">submit</button>
+        </form>
+      </div>
+    </form>
   </body>
-  <div>
-    <select name="avatar" id="">
-      <option
-        value="avatar-1"
-        style="background-image: url('./public/avatar/avatar-1.png')"
-      >
-        <img src="./public/avatar/avatar-1.png" alt="" />
-      </option>
-    </select>
-  </div>
 </html>

@@ -44,22 +44,22 @@ function userJoined(username, text) {
 }
 //broadcast event to other user except connect one
 let username;
-socket.on("user-joined", (username) => {
+var character;
+socket.on("user-joined", ({ username, character }) => {
   username = username;
+  character = character;
   userJoined(username, "-Joined");
   messageContainer.scrollTop = messageContainer.scrollHeight;
 });
-let personname;
 let senddate;
 
-const appendleft = (message, sendtime, username) => {
+const appendleft = (message, sendtime, username, character) => {
   const messageElement = document.createElement("div");
   messageElement.classList.add("d-flex", "flex-row", "justify-content-start");
-  // const image = document.createElement("img");
-  // image.style.width = "45px";
-  // image.style.height = "100%";
-  // image.src =
-  //   "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp";
+  const image = document.createElement("img");
+  image.style.width = "45px";
+  image.style.height = "100%";
+  image.src = `../public/avatar/${character}.png`;
   const divForTimeAndP = document.createElement("div");
   const pUsername = document.createElement("p");
   pUsername.classList.add("small", "ms-3", "mb-0", "rounded-3", "text-muted");
@@ -75,6 +75,7 @@ const appendleft = (message, sendtime, username) => {
   divForTimeAndP.append(pMessage);
   divForTimeAndP.append(pTime);
   // messageElement.append(image);
+  messageElement.append(image);
   messageElement.append(divForTimeAndP);
   messageContainer.append(messageElement);
   messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -82,7 +83,7 @@ const appendleft = (message, sendtime, username) => {
 };
 
 //for appending item to right
-const appendRight = (message, sendtime, username) => {
+const appendRight = (message, sendtime, username, character) => {
   const messageElement = document.createElement("div");
   messageElement.classList.add(
     "d-flex",
@@ -91,10 +92,10 @@ const appendRight = (message, sendtime, username) => {
     "mb-4",
     "pt-1"
   );
-  // const image = document.createElement("img");
-  // image.style.width = "45px";
-  // image.style.height = "100%";
-  // image.src = "cool-background.png";
+  const image = document.createElement("img");
+  image.style.width = "45px";
+  image.style.height = "100%";
+  image.src = `../public/avatar/${character}.png`;
 
   const divForTimeAndP = document.createElement("div");
   const pUsername = document.createElement("p");
@@ -135,6 +136,7 @@ const appendRight = (message, sendtime, username) => {
   divForTimeAndP.append(pMessage);
   divForTimeAndP.append(pTime);
   messageElement.append(divForTimeAndP);
+  messageElement.append(image);
   // messageElement.append(image);
   messageContainer.append(messageElement);
   messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -142,7 +144,7 @@ const appendRight = (message, sendtime, username) => {
 
 let textMessage;
 
-form.addEventListener("submit", function(e) {
+form.addEventListener("submit", function (e) {
   socket.emit("stoptyping");
   e.preventDefault();
   textMessage = input.value;
@@ -155,37 +157,24 @@ form.addEventListener("submit", function(e) {
       textMessage,
       username: usernamevalue,
       senddate,
-      code: codenamevalue,
+      character: character,
     });
   }
   input.value = "";
 });
 
-socket.on("takeMessage", ({ textMessage, username, senddate }) => {
+socket.on("takeMessage", ({ textMessage, username, senddate, character }) => {
   if (username === usernamevalue) {
-    appendRight(textMessage, senddate, "You");
+    appendRight(textMessage, senddate, "You", character);
   } else {
-    appendleft(textMessage, senddate, usernamevalue);
+    appendleft(textMessage, senddate, username, character);
   }
 });
 
-//for bubble typing animation
-// const userleft = document.createElement("div");
-// userleft.classList.add("d-flex", "flex-row", "justify-content-start");
-// const fbchatdiv = document.createElement("div");
-// const span1 = document.createElement("span");
-// const span2 = document.createElement("span");
-// const span3 = document.createElement("span");
-// fbchatdiv.classList.add("fb-chat", "--bubbles");
-// fbchatdiv.appendChild(span1);
-// fbchatdiv.appendChild(span2);
-// fbchatdiv.appendChild(span3);
-// userleft.appendChild(fbchatdiv);
-
 const span = document.querySelectorAll("span");
-input.addEventListener("input", function(e) {
+input.addEventListener("input", function (e) {
   socket.emit("typing");
-  document.addEventListener("keydown", function(e) {
+  document.addEventListener("keydown", function (e) {
     setTimeout(() => {
       socket.emit("stoptyping");
     }, 10000);

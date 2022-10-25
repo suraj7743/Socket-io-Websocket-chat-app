@@ -133,7 +133,7 @@
                 data-mdb-perfect-scrollbar="true"
                 style="position: relative; height: 400px"
               >
-                <div class="d-flex flex-row justify-content-start">
+                <!-- <div class="d-flex flex-row justify-content-start">
                   <img
                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                     alt="avatar 1"
@@ -178,7 +178,7 @@
                     alt="avatar 1"
                     style="width: 45px; height: 100%"
                   />
-                </div>
+                </div> -->
 
                 <div class="divider align-items-center mb-4">
                   <p class="text-center mx-3 mb-0" style="color: #a2aab7">
@@ -197,9 +197,9 @@
                 class="card-footer text-muted d-flex justify-content-start align-items-center p-3"
               >
                 <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg"
+                  src="../public/avatar/<%= character %>.png"
                   alt="avatar 3"
-                  style="width: 40px; height: 100%; border-radius: 37%;"
+                  style="width: 40px; height: 100%; border-radius: 37%"
                 />
 
                 <form class="input-group" id="sendform">
@@ -234,9 +234,10 @@
     </section>
     <script src="../public/chatroom.js"></script>
     <script>
-      const usernamevalue = "<%=username%>";
-      const codenamevalue = "<%=code%>";
+      var usernamevalue = "<%= username %>";
+      var codenamevalue = "<%=code%>";
       var audio = new Audio("../public/ting.mp3");
+      var character = "<%=character%>";
     </script>
 
     <script

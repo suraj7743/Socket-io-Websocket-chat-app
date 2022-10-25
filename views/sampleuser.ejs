@@ -15,8 +15,92 @@
   </head>
   <body>
     <style>
+      *,
+      *:after,
+      *:before {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+        color: #000021;
+
+        background-color: #e6e6ef;
+      }
+
+      .containers {
+        max-width: 20%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        flex-wrap: nowrap;
+      }
+
+      input[type="radio"] {
+        display: none;
+      }
+
+      label {
+        display: block;
+        cursor: pointer;
+        font-weight: 500;
+        margin-bottom: 0.1%;
+      }
+
+      label span {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px 10px 10px;
+        border-radius: 31px;
+        transition: 0.25s ease;
+      }
+
+      label span:hover,
+      input[type="radio"]:checked + span {
+        background-color: #d6d6e5;
+      }
+
+      label span:before {
+        content: "";
+        background-color: #fff;
+        width: 0px;
+        height: 0px;
+        border-radius: 50%;
+        margin-right: 10px;
+        transition: 0.25s ease;
+        box-shadow: inset 0 0 0 2px #00005c;
+      }
+
+      input[type="radio"]:checked + span:before {
+        box-shadow: inset 0 0 0 10px #00005c;
+      }
+      img {
+        width: 40px;
+        height: 100%;
+      }
+
       body {
         background-color: steelblue;
+      }
+      @media (max-width: 800px) {
+        body {
+          font-size: 12px;
+        }
+        img {
+          width: 30px;
+        }
+
+        label span {
+          padding: 2px 2px 2px 1px;
+          border-radius: 10px;
+          transition: 0.25s ease;
+        }
+        input[type="radio"]:checked + span:before {
+          box-shadow: inset 0 0 0 1px #00005c;
+        }
       }
     </style>
     <section class="vh-100 gradient-custom">
@@ -67,14 +151,11 @@
                         required
                         name="code"
                       />
-                      <label
-                        class="form-label roomh3 text-start"
-                        for="typePasswordX"
+                      <label class="form-label usernameMessage" for="typeEmailX"
+                        >Enter Existing Code</label
                       >
-                        Enter Existing Room
-                      </label>
                     </div>
-                    <div class="text-center">
+                    <!-- <div class="text-center">
                       <div>
                         <P class="fs-3">Make My own room</P>
                       </div>
@@ -85,6 +166,200 @@
                         >
                           MAKE
                         </button>
+                      </div>
+                    </div> -->
+                    <div class="text-start">
+                      <p>Select Your Avatar</p>
+                      <div class="container d-flex flex-wrap">
+                        <label id="javascript">
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-1"
+                            required
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-1.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-2"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-2.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-4"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-4.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-6"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-6.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-7"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-7.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-8"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-8.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-9"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-9.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-10"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-10.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-11"
+                            checked
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-11.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-12"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-12.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-13"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-13.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-14"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-14.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-15"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-15.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-17"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-17.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-18"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-18.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-19"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-19.png" alt=""
+                          /></span>
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            id="javascript"
+                            name="avatar"
+                            value="avatar-20"
+                          />
+                          <span
+                            ><img src="./public/avatar/avatar-20.png" alt=""
+                          /></span>
+                        </label>
                       </div>
                     </div>
 
