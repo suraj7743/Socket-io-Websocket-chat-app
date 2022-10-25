@@ -24,8 +24,8 @@ let redisClient = Redis.createClient({
   url: process.env.REDIS_URL,
   legacyMode: true,
   socket: {
-    host: "localhost",
-    port: 6379,
+    tls: true,
+    rejectUnauthorized: false,
   },
 });
 
