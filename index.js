@@ -21,6 +21,7 @@ const redisconfig = {
   rejectUnauthorized: false,
 };
 let redisClient = Redis.createClient({
+  url: process.env.REDIS_URL,
   legacyMode: true,
   socket: {
     host: "localhost",
