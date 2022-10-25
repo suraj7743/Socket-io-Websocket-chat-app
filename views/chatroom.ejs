@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Room</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <style>
+      body {
+        background-color: black;
+      }
+      #chat2 .form-control {
+        border-color: transparent;
+      }
+      p {
+        word-break: break-all;
+      }
+
+      #chat2 .form-control:focus {
+        border-color: transparent;
+        box-shadow: inset 0px 0px 0px 1px transparent;
+      }
+
+      .divider:after,
+      .divider:before {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #eee;
+      }
+      .card-body {
+        overflow-y: auto;
+        background-color: rgb(236, 242, 247);
+      }
+
+      .left {
+        background: linear-gradient(
+          to right,
+          #dae2f8,
+          #d6a4a4
+        ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        color: black;
+      }
+      .right {
+        background: linear-gradient(
+          to right,
+          #6190e8,
+          #a7bfe8
+        ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        color: white;
+      }
+
+      .fb-chat {
+        /* background-color: #e6e7ec; */
+        border-radius: 30% 50%;
+        position: absolute;
+        top: 79%;
+        left: 7%;
+        outline: none;
+        border: none;
+
+        /* transform: translate(-50%, -50%); */
+      }
+
+      .--bubbles {
+        text-align: center;
+      }
+
+      span {
+        display: inline-block;
+        background-color: #b6b5ba;
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        animation: bob 2s infinite;
+        margin-top: 2%;
+        margin-left: 4px;
+        visibility: hidden;
+      }
+
+      :nth-child(1) {
+        animation-delay: -1s;
+      }
+      :nth-child(2) {
+        animation-delay: -0.85s;
+      }
+      :nth-child(3) {
+        animation-delay: -0.7s;
+        margin-right: 0;
+      }
+
+      @keyframes bob {
+        10% {
+          transform: translateY(-10px);
+          background-color: #9e9da2;
+        }
+        50% {
+          transform: translateY(0);
+          background-color: #b6b5ba;
+        }
+      }
+    </style>
+    <section style="background-color: black">
+      <div class="container py-5">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-6">
+            <div class="card" id="chat2">
+              <div
+                class="card-header d-flex justify-content-between align-items-center p-3"
+              >
+                <h5 class="mb-0">Chat</h5>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                  data-mdb-ripple-color="dark"
+                >
+                  Let's Chat App
+                </button>
+              </div>
+              <div
+                class="card-body"
+                data-mdb-perfect-scrollbar="true"
+                style="position: relative; height: 400px"
+              >
+                <div class="d-flex flex-row justify-content-start">
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                    alt="avatar 1"
+                    style="width: 45px; height: 100%"
+                  />
+                  <div>
+                    <p class="small ms-3 mb-0 rounded-3 text-muted">MY name</p>
+                    <p
+                      class="small p-2 ms-3 mb-1 rounded-3 left"
+                      style="background-color: #f5f6f7"
+                    >
+                      Hi
+                    </p>
+                    <p class="small ms-3 mb-3 rounded-3 text-muted">23:58</p>
+                  </div>
+                </div>
+
+                <div class="divider d-flex align-items-center mb-4">
+                  <p class="text-center mx-3 mb-0" style="color: #a2aab7">
+                    Today
+                  </p>
+                </div>
+
+                <div
+                  class="d-flex flex-row justify-content-end mb-4 pt-1"
+                  style="clear: both"
+                >
+                  <div>
+                    <p
+                      class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary right"
+                    >
+                      Hiii, I'm good.
+                    </p>
+                    <p
+                      class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end"
+                    >
+                      00:06
+                    </p>
+                  </div>
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                    alt="avatar 1"
+                    style="width: 45px; height: 100%"
+                  />
+                </div>
+
+                <div class="divider align-items-center mb-4">
+                  <p class="text-center mx-3 mb-0" style="color: #a2aab7">
+                    User-Joined
+                  </p>
+                </div>
+              </div>
+              <div class="justify-content-start" style="clear: both">
+                <div class="fb-chat --bubbles">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div
+                class="card-footer text-muted d-flex justify-content-start align-items-center p-3"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/1200px-Elon_Musk_Royal_Society_%28crop2%29.jpg"
+                  alt="avatar 3"
+                  style="width: 40px; height: 100%; border-radius: 37%;"
+                />
+
+                <form class="input-group" id="sendform">
+                  <input
+                    type="text"
+                    class="form-control form-control-lg"
+                    id="sendmessage exampleFormControlInput1"
+                    placeholder="Type message"
+                    autofocus
+                  />
+                  <button class="btn bg-white text-white">
+                    <img
+                      src="../public/send.png"
+                      alt=""
+                      style="width: 40px; height: 100%"
+                    />
+                  </button>
+                </form>
+
+                <!-- <a class="ms-1 text-muted" href="#!"
+                  ><i class="fas fa-paperclip"></i
+                ></a> -->
+                <!-- <a class="ms-3 text-muted" href="#!"
+                  ><i class="fas fa-smile"></i
+                ></a> -->
+                <!-- <a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="../public/chatroom.js"></script>
+    <script>
+      const usernamevalue = "<%=username%>";
+      const codenamevalue = "<%=code%>";
+      var audio = new Audio("../public/ting.mp3");
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

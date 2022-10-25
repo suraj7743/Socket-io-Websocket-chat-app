@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <!-- <script defer src="../public/chat.js"></script> -->
     <!-- <script src="./js/chat.js"></script> -->
 
@@ -19,14 +19,13 @@
   </head>
   <body>
     <style>
+      body {
+        background-color: black;
+      }
       .container {
         border-radius: 2%;
         max-width: 955px;
-        background: linear-gradient(
-          to right,
-          #e0eafc,
-          #cfdef3
-        ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to right, #e0eafc, #cfdef3);
 
         margin: auto;
         max-height: 85vh;
@@ -123,7 +122,6 @@
 
       #sendmessage {
         width: 90%;
-
         box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
       }
       ::-webkit-scrollbar {
@@ -232,7 +230,7 @@
         }
       };
       let textMessage;
-      form.addEventListener("submit", function (e) {
+      form.addEventListener("click", function (e) {
         e.preventDefault();
         textMessage = input.value;
         textMessage = textMessage.trim();
@@ -244,7 +242,7 @@
             textMessage,
             username: "<%= username %>",
             senddate,
-            code: "<%= entryCode %>",
+            code: "<%= code %>",
           });
         }
         input.value = "";
@@ -258,8 +256,8 @@
           append(textMessage, "left", username, senddate);
         }
       });
-      socket.on("userleft", () => {
-        userJoined("<%= username %>", " Left");
+      socket.on("userleft", (personname) => {
+        userJoined(personname, " Left");
       });
     </script>
   </body>
