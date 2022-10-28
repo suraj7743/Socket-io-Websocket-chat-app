@@ -16,11 +16,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //connecting to redis with docker image
 const redisconfig = {
-  host: "https://chitchatic.herokuapp.com/",
+  host: "127.0.0.1",
   port: 6379,
-  rejectUnauthorized: false,
+  // rejectUnauthorized: false,
 };
-let redisClient = Redis.createClient(redisconfig);
+let redisClient = Redis.createClient({
+  url: process.env.REDIS_URL,
+  legacyMode: true,
+  socket: {
+    // port: 6379,
+    // host: "localhost",
+    rejectUnauthorized: false,
+  },
+});
 
 // {
 //   url: process.env.REDIS_URL,
