@@ -20,14 +20,7 @@ const redisconfig = {
   port: 6379,
   rejectUnauthorized: false,
 };
-let redisClient = Redis.createClient({
-  url: process.env.REDIS_URL,
-  legacyMode: true,
-  socket: {
-    tls: true,
-    rejectUnauthorized: false,
-  },
-});
+let redisClient = Redis.createClient({ url: process.env, REDIS_URL });
 
 // {
 //   url: process.env.REDIS_URL,
